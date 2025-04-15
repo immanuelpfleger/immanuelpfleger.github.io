@@ -35,8 +35,9 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <!-- Exam Input Form -->
             <div class="bg-white rounded-xl shadow-md p-6 col-span-1 lg:col-span-1">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Add New Exam</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4" id="formTitle">Add New Exam</h2>
                 <form id="examForm" class="space-y-4">
+                    <input type="hidden" id="examId">
                     <div>
                         <label for="examName" class="block text-sm font-medium text-gray-700 mb-1">Exam Name</label>
                         <input type="text" id="examName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
@@ -61,9 +62,14 @@
                             <option value="high">High</option>
                         </select>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
-                        <i class="fas fa-plus-circle mr-2"></i> Add Exam
-                    </button>
+                    <div class="flex space-x-3">
+                        <button type="submit" id="submitButton" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-plus-circle mr-2"></i> Add Exam
+                        </button>
+                        <button type="button" id="cancelEdit" class="hidden bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 flex items-center justify-center">
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
 
@@ -195,6 +201,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize exams array from localStorage or empty array
             let exams = JSON.parse(localStorage.getItem('exams')) || [];
+            let isEditing = false;
+            let currentEditId = null;
             
             // DOM elements
             const examForm = document.getElementById('examForm');
@@ -202,6 +210,10 @@
             const examsTableBody = document.getElementById('examsTableBody');
             const noExamSelected = document.getElementById('noExamSelected');
             const examDetails = document.getElementById('examDetails');
+            const formTitle = document.getElementById('formTitle');
+            const submitButton = document.getElementById('submitButton');
+            const cancelEdit = document.getElementById('cancelEdit');
+            const examIdInput = document.getElementById('examId');
             
             // Form submission
             examForm.addEventListener('submit', function(e) {
@@ -219,19 +231,37 @@
                     return;
                 }
                 
-                // Create new exam object
-                const newExam = {
-                    id: Date.now().toString(),
-                    name: examName,
-                    date: examDate,
-                    totalTopics: totalTopics,
-                    completedTopics: completedTopics,
-                    priority: priority,
-                    createdAt: new Date().toISOString()
-                };
-                
-                // Add to exams array
-                exams.push(newExam);
+                if (isEditing) {
+                    // Update existing exam
+                    const index = exams.findIndex(e => e.id === currentEditId);
+                    if (index !== -1) {
+                        exams[index] = {
+                            ...exams[index],
+                            name: examName,
+                            date: examDate,
+                            totalTopics: totalTopics,
+                            completedTopics: completedTopics,
+                            priority: priority
+                        };
+                    }
+                    
+                    // Reset edit mode
+                    resetEditMode();
+                } else {
+                    // Create new exam object
+                    const newExam = {
+                        id: Date.now().toString(),
+                        name: examName,
+                        date: examDate,
+                        totalTopics: totalTopics,
+                        completedTopics: completedTopics,
+                        priority: priority,
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // Add to exams array
+                    exams.push(newExam);
+                }
                 
                 // Save to localStorage
                 localStorage.setItem('exams', JSON.stringify(exams));
@@ -239,14 +269,36 @@
                 // Update UI
                 updateExamSelector();
                 updateExamsTable();
-                renderExamDetails(newExam.id);
+                
+                // If we were editing, show the updated exam details
+                if (isEditing) {
+                    renderExamDetails(currentEditId);
+                    examSelector.value = currentEditId;
+                } else {
+                    // If adding new, show the new exam
+                    renderExamDetails(exams[exams.length - 1].id);
+                    examSelector.value = exams[exams.length - 1].id;
+                }
                 
                 // Reset form
                 examForm.reset();
                 
                 // Show success message
-                alert('Exam added successfully!');
+                alert(`Exam ${isEditing ? 'updated' : 'added'} successfully!`);
             });
+            
+            // Cancel edit
+            cancelEdit.addEventListener('click', resetEditMode);
+            
+            function resetEditMode() {
+                isEditing = false;
+                currentEditId = null;
+                formTitle.textContent = 'Add New Exam';
+                submitButton.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Add Exam';
+                cancelEdit.classList.add('hidden');
+                examForm.reset();
+                examIdInput.value = '';
+            }
             
             // Exam selector change
             examSelector.addEventListener('change', function() {
@@ -424,17 +476,24 @@
             if (!exam) return;
             
             // Fill the form with exam data
+            document.getElementById('examId').value = exam.id;
             document.getElementById('examName').value = exam.name;
             document.getElementById('examDate').value = exam.date;
             document.getElementById('totalTopics').value = exam.totalTopics;
             document.getElementById('completedTopics').value = exam.completedTopics;
             document.getElementById('priority').value = exam.priority;
             
+            // Update UI for edit mode
+            document.getElementById('formTitle').textContent = 'Edit Exam';
+            document.getElementById('submitButton').innerHTML = '<i class="fas fa-save mr-2"></i> Save Changes';
+            document.getElementById('cancelEdit').classList.remove('hidden');
+            
+            // Set editing state
+            window.isEditing = true;
+            window.currentEditId = examId;
+            
             // Scroll to form
             document.getElementById('examForm').scrollIntoView({ behavior: 'smooth' });
-            
-            // Remove the exam (will be re-added if form is submitted)
-            deleteExam(examId, false);
         }
         
         function deleteExam(examId, confirmDelete = true) {
