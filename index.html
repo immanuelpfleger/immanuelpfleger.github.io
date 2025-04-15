@@ -8,31 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- Existing Styles --- */
-        .progress-ring__circle {
-            transition: stroke-dashoffset 0.5s;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .text-muted {
-            color: #a0aec0; /* Example: gray-500 */
-            font-style: italic;
-        }
-
+        .progress-ring__circle { transition: stroke-dashoffset 0.5s; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .text-muted { color: #a0aec0; font-style: italic; }
         /* --- Styles for Auth --- */
-        #authSection, #appSection {
-             /* Control visibility via JS */
-        }
+        #authSection, #appSection { /* Visibility controlled via JS */ }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -53,6 +35,7 @@
                     <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <input type="password" id="loginPassword" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
+                <!-- WICHTIG: Button type="submit" ist korrekt für Formulare -->
                 <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">Login</button>
             </form>
 
@@ -71,10 +54,12 @@
                     <label for="signupConfirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
                     <input type="password" id="signupConfirmPassword" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
+                 <!-- WICHTIG: Button type="submit" ist korrekt für Formulare -->
                 <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">Sign Up</button>
             </form>
 
              <div class="text-center mt-6">
+                 <!-- WICHTIG: Diese Buttons sind type="button" (default), da sie das Formular nicht senden sollen -->
                 <button id="switchToSignup" class="text-indigo-600 hover:text-indigo-800 text-sm">Don't have an account? Sign Up</button>
                 <button id="switchToLogin" class="text-indigo-600 hover:text-indigo-800 text-sm hidden">Already have an account? Login</button>
             </div>
@@ -86,7 +71,8 @@
 
     <!-- Main Application Section (Initially Hidden) -->
     <div id="appSection" class="container mx-auto px-4 py-8 max-w-6xl hidden">
-        <header class="flex justify-between items-center mb-12">
+         <!-- App Content hier (unverändert lassen) -->
+         <header class="flex justify-between items-center mb-12">
             <div>
                 <h1 class="text-4xl font-bold text-indigo-700 mb-2">Exam Preparation Tracker</h1>
                 <p class="text-gray-600">Stay organized and track your study progress effectively</p>
@@ -151,7 +137,7 @@
 
             <!-- Exam Overview -->
             <div class="bg-white rounded-xl shadow-md p-6 col-span-1 lg:col-span-2 fade-in" id="examOverview">
-                 <!-- Content remains the same, but will be populated based on logged-in user -->
+                 <!-- Content remains the same -->
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-semibold text-gray-800">Exam Overview</h2>
                     <div class="relative">
@@ -173,36 +159,20 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <!-- Days Left Card -->
                         <div class="bg-indigo-50 rounded-lg p-4 flex items-center card-hover transition duration-300">
-                            <div class="bg-indigo-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-calendar-day text-indigo-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-indigo-500">Days Left</p>
-                                <h3 class="text-2xl font-bold text-indigo-800" id="daysLeft">0</h3>
-                            </div>
+                            <div class="bg-indigo-100 p-3 rounded-full mr-4"><i class="fas fa-calendar-day text-indigo-600 text-xl"></i></div>
+                            <div><p class="text-sm text-indigo-500">Days Left</p><h3 class="text-2xl font-bold text-indigo-800" id="daysLeft">0</h3></div>
                         </div>
                         <!-- Progress Card -->
                         <div class="bg-green-50 rounded-lg p-4 flex items-center card-hover transition duration-300">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-green-500">Progress</p>
-                                <h3 class="text-2xl font-bold text-green-800" id="progressPercent">0%</h3>
-                            </div>
+                            <div class="bg-green-100 p-3 rounded-full mr-4"><i class="fas fa-chart-line text-green-600 text-xl"></i></div>
+                            <div><p class="text-sm text-green-500">Progress</p><h3 class="text-2xl font-bold text-green-800" id="progressPercent">0%</h3></div>
                         </div>
                         <!-- Priority Card -->
                         <div class="bg-yellow-50 rounded-lg p-4 flex items-center card-hover transition duration-300">
-                            <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-exclamation text-yellow-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-yellow-500">Priority</p>
-                                <h3 class="text-2xl font-bold text-yellow-800 capitalize" id="priorityLevel">Medium</h3>
-                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full mr-4"><i class="fas fa-exclamation text-yellow-600 text-xl"></i></div>
+                            <div><p class="text-sm text-yellow-500">Priority</p><h3 class="text-2xl font-bold text-yellow-800 capitalize" id="priorityLevel">Medium</h3></div>
                         </div>
                     </div>
-
                      <!-- Progress Ring and Basic Info -->
                     <div class="flex flex-col items-center mb-6">
                         <div class="relative w-40 h-40 mb-4">
@@ -210,9 +180,7 @@
                                 <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
                                 <circle class="progress-ring__circle text-indigo-600" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
                             </svg>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <span class="text-2xl font-bold text-gray-700" id="ringProgressPercent">0%</span>
-                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center"><span class="text-2xl font-bold text-gray-700" id="ringProgressPercent">0%</span></div>
                         </div>
                         <div class="text-center">
                             <h4 class="font-medium text-gray-700" id="examNameDisplay">Exam Name</h4>
@@ -221,24 +189,17 @@
                             <p class="text-sm text-gray-500" id="examGradeDisplay">Grade: -</p>
                         </div>
                     </div>
-
                     <!-- Study Recommendations -->
                     <div class="bg-blue-50 rounded-lg p-4 mb-6">
-                        <h3 class="font-medium text-blue-800 mb-2 flex items-center">
-                            <i class="fas fa-lightbulb mr-2"></i> Study Recommendations
-                        </h3>
+                        <h3 class="font-medium text-blue-800 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2"></i> Study Recommendations</h3>
                         <p class="text-sm text-blue-600" id="studyRecommendation">Select an exam to get personalized study recommendations.</p>
                     </div>
-
                      <!-- Topics Progress -->
                     <div>
                         <h3 class="font-medium text-gray-700 mb-3">Topics Progress</h3>
-                        <div class="bg-gray-200 rounded-full h-4 mb-2">
-                            <div id="topicsProgressBar" class="bg-indigo-600 h-4 rounded-full" style="width: 0%"></div>
-                        </div>
+                        <div class="bg-gray-200 rounded-full h-4 mb-2"><div id="topicsProgressBar" class="bg-indigo-600 h-4 rounded-full" style="width: 0%"></div></div>
                         <div class="flex justify-between text-sm text-gray-600">
-                            <span id="completedTopicsDisplay">0 completed</span>
-                            <span id="totalTopicsDisplay">of 0 total</span>
+                            <span id="completedTopicsDisplay">0 completed</span><span id="totalTopicsDisplay">of 0 total</span>
                         </div>
                     </div>
                 </div>
@@ -247,10 +208,7 @@
 
         <!-- All Exams Table -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
-             <!-- Content remains the same, but will be populated based on logged-in user -->
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-800">Your Exams</h2>
-            </div>
+            <div class="px-6 py-4 border-b border-gray-200"><h2 class="text-xl font-semibold text-gray-800">Your Exams</h2></div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -266,26 +224,29 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200" id="examsTableBody">
-                        <tr>
-                            <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">No exams added yet</td>
-                        </tr>
+                        <tr><td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">No exams added yet</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+         <!-- App Content Ende -->
     </div>
 
     <script>
+        // Wrap entire script in DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded and parsed"); // DEBUG
+
             // --- Constants and State ---
             const LOCAL_STORAGE_KEY = 'examTrackerAppData';
             const SESSION_STORAGE_USER_KEY = 'examTrackerCurrentUser';
-            let appData = loadAppData(); // Holds { users: { username: { password: '...', exams: [] } } }
-            let currentUser = null; // Holds the username of the logged-in user
-            window.isEditing = false; // Keep global for onclick handlers
+            let appData = loadAppData();
+            let currentUser = null;
+            window.isEditing = false;
             window.currentEditId = null;
 
-            // --- DOM Elements ---
+            // --- DOM Element Retrieval ---
+            // Ensure all elements are retrieved *after* DOM is loaded
             const authSection = document.getElementById('authSection');
             const appSection = document.getElementById('appSection');
             const loginForm = document.getElementById('loginForm');
@@ -297,8 +258,6 @@
             const currentUserDisplay = document.getElementById('currentUserDisplay');
             const loginError = document.getElementById('loginError');
             const signupError = document.getElementById('signupError');
-
-            // Exam specific elements (used within functions)
             const examForm = document.getElementById('examForm');
             const examSelector = document.getElementById('examSelector');
             const examsTableBody = document.getElementById('examsTableBody');
@@ -309,82 +268,113 @@
             const cancelEdit = document.getElementById('cancelEdit');
             const examIdInput = document.getElementById('examId');
 
+             // Check if elements were found (basic check)
+             if (!loginForm || !signupForm || !switchToSignup || !switchToLogin || !logoutButton || !examForm) {
+                 console.error("Error: One or more essential DOM elements not found!");
+                 alert("Initialization Error: Could not find required page elements. Check HTML IDs.");
+                 return; // Stop execution if basic elements are missing
+             }
+             console.log("Essential DOM elements found."); // DEBUG
+
             // --- Data Handling Functions ---
             function loadAppData() {
+                console.log("Loading app data..."); // DEBUG
                 const data = localStorage.getItem(LOCAL_STORAGE_KEY);
                 try {
                     const parsedData = JSON.parse(data);
-                    // Basic validation
                     if (parsedData && typeof parsedData === 'object' && parsedData.users && typeof parsedData.users === 'object') {
+                         console.log("App data loaded successfully:", parsedData); // DEBUG
                         return parsedData;
                     }
+                     console.log("Invalid or missing app data in localStorage, returning default."); // DEBUG
                 } catch (e) {
                     console.error("Error parsing app data from localStorage:", e);
                 }
-                // Return default structure if loading fails or data is invalid
-                return { users: {} };
+                return { users: {} }; // Default structure
             }
 
             function saveAppData() {
+                 console.log("Attempting to save app data:", appData); // DEBUG
                 try {
                     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
+                     console.log("App data saved successfully."); // DEBUG
                 } catch (e) {
                     console.error("Error saving app data to localStorage:", e);
                     alert("Could not save data. LocalStorage might be full or unavailable.");
                 }
             }
 
-             // Function to get exams for the current user
             function getCurrentUserExams() {
-                if (!currentUser || !appData.users[currentUser]) {
-                    return []; // Return empty array if no user or user data missing
-                }
-                // Ensure exams array exists for the user
+                if (!currentUser || !appData.users[currentUser]) return [];
                 if (!Array.isArray(appData.users[currentUser].exams)) {
                      appData.users[currentUser].exams = [];
                 }
                 return appData.users[currentUser].exams;
             }
 
-             // Function to save exams for the current user
             function saveCurrentUserExams(updatedExams) {
-                if (!currentUser || !appData.users[currentUser]) {
-                    console.error("Cannot save exams: No current user or user data.");
-                    return;
-                }
+                if (!currentUser || !appData.users[currentUser]) return;
                 appData.users[currentUser].exams = updatedExams;
                 saveAppData();
             }
 
             // --- Authentication Functions ---
             function handleLogin(e) {
-                e.preventDefault();
+                console.log("handleLogin triggered"); // DEBUG
+                e.preventDefault(); // Prevent default form submission FIRST
                 loginError.classList.add('hidden');
-                const username = document.getElementById('loginUsername').value.trim();
-                const password = document.getElementById('loginPassword').value; // Get password
+                const usernameInput = document.getElementById('loginUsername'); // Get input elements
+                const passwordInput = document.getElementById('loginPassword');
+
+                 if (!usernameInput || !passwordInput) {
+                     console.error("Login input fields not found!"); return;
+                 }
+
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                 console.log(`Attempting login for user: ${username}`); // DEBUG
 
                 if (!username || !password) {
                     showError(loginError, "Please enter username and password.");
                     return;
                 }
 
-                // Check if user exists and password matches (VERY INSECURE - DEMO ONLY)
+                 // Ensure appData is loaded
+                 if (!appData || !appData.users) {
+                     console.error("App data not loaded correctly for login check.");
+                     showError(loginError, "Login error. Please refresh.");
+                     return;
+                 }
+                 console.log("Checking user data:", appData.users[username]); // DEBUG
+
                 if (appData.users[username] && appData.users[username].password === password) {
+                     console.log("Login successful!"); // DEBUG
                     currentUser = username;
-                    sessionStorage.setItem(SESSION_STORAGE_USER_KEY, currentUser); // Store user in session
+                    sessionStorage.setItem(SESSION_STORAGE_USER_KEY, currentUser);
                     showApp();
-                    loginForm.reset();
+                    loginForm.reset(); // Reset form AFTER successful login
                 } else {
+                     console.log("Login failed: Invalid username or password."); // DEBUG
                     showError(loginError, "Invalid username or password.");
                 }
             }
 
             function handleSignup(e) {
-                e.preventDefault();
+                console.log("handleSignup triggered"); // DEBUG
+                e.preventDefault(); // Prevent default form submission FIRST
                 signupError.classList.add('hidden');
-                const username = document.getElementById('signupUsername').value.trim();
-                const password = document.getElementById('signupPassword').value;
-                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                const usernameInput = document.getElementById('signupUsername');
+                const passwordInput = document.getElementById('signupPassword');
+                const confirmPasswordInput = document.getElementById('signupConfirmPassword');
+
+                 if (!usernameInput || !passwordInput || !confirmPasswordInput) {
+                     console.error("Signup input fields not found!"); return;
+                 }
+
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                 console.log(`Attempting signup for user: ${username}`); // DEBUG
 
                  if (!username || !password || !confirmPassword) {
                      showError(signupError, "Please fill in all fields.");
@@ -394,511 +384,349 @@
                     showError(signupError, "Passwords do not match.");
                     return;
                 }
-                if (password.length < 4) { // Basic password length check
+                if (password.length < 4) {
                     showError(signupError, "Password must be at least 4 characters long.");
                      return;
                  }
 
-                // Check if username already exists
+                 // Ensure appData is loaded
+                 if (!appData || !appData.users) {
+                     console.error("App data not loaded correctly for signup check.");
+                     showError(signupError, "Signup error. Please refresh.");
+                     return;
+                 }
+                 console.log("Checking existing users:", Object.keys(appData.users)); // DEBUG
+
                 if (appData.users[username]) {
+                     console.log("Signup failed: Username already taken."); // DEBUG
                     showError(signupError, "Username already taken.");
                 } else {
-                    // Create new user (Store password directly - INSECURE)
-                    appData.users[username] = {
-                        password: password, // Store password directly for demo
-                        exams: [] // Initialize empty exams array
-                    };
-                    saveAppData();
-                    signupForm.reset();
+                     console.log("Signup successful: Creating user."); // DEBUG
+                    appData.users[username] = { password: password, exams: [] };
+                    saveAppData(); // Save the updated user list
+                    signupForm.reset(); // Reset form AFTER successful signup
                     alert("Signup successful! Please login.");
-                    showLoginForm(); // Switch back to login form
+                    showLoginForm();
                 }
             }
 
             function handleLogout() {
+                console.log("handleLogout triggered"); // DEBUG
                 currentUser = null;
-                sessionStorage.removeItem(SESSION_STORAGE_USER_KEY); // Clear session
-                 // Clear potentially sensitive states
+                sessionStorage.removeItem(SESSION_STORAGE_USER_KEY);
                 resetEditMode();
                  clearExamDetails();
                 showAuth();
             }
 
-             function checkLoginState() {
+            function checkLoginState() {
+                console.log("Checking login state..."); // DEBUG
                 const loggedInUser = sessionStorage.getItem(SESSION_STORAGE_USER_KEY);
-                // Optional: Validate against localStorage data in case it was cleared/modified
+                 console.log("User in session storage:", loggedInUser); // DEBUG
                 if (loggedInUser && appData.users[loggedInUser]) {
+                    console.log("Valid session found. Setting current user."); // DEBUG
                     currentUser = loggedInUser;
                     return true;
                 }
-                 handleLogout(); // Ensure clean state if session user is invalid
+                 console.log("No valid session found or user data missing."); // DEBUG
+                 // No need to call handleLogout here, just return false
                 return false;
             }
 
             // --- UI Control Functions ---
             function showAuth() {
+                 console.log("Showing Auth Screen"); // DEBUG
                 appSection.classList.add('hidden');
                 authSection.classList.remove('hidden');
-                document.body.classList.add('items-center', 'justify-center', 'flex');
-                document.body.classList.remove('bg-gray-50'); // Use gray-100 for auth page
-                 document.body.classList.add('bg-gray-100');
+                document.body.classList.add('items-center', 'justify-center', 'flex', 'bg-gray-100');
+                document.body.classList.remove('bg-gray-50');
+                 showLoginForm(); // Default to login view when showing auth
             }
 
             function showApp() {
+                 console.log("Showing App Screen for user:", currentUser); // DEBUG
                 authSection.classList.add('hidden');
                 appSection.classList.remove('hidden');
-                currentUserDisplay.textContent = escapeHtml(currentUser); // Display username
+                 // Check if currentUserDisplay exists before setting textContent
+                 if (currentUserDisplay) {
+                     currentUserDisplay.textContent = escapeHtml(currentUser);
+                 } else {
+                     console.error("currentUserDisplay element not found!");
+                 }
                 document.body.classList.remove('items-center', 'justify-center', 'flex', 'bg-gray-100');
-                document.body.classList.add('bg-gray-50'); // Use gray-50 for app page
-                initializeAppUI(); // Load user's data into the UI
+                document.body.classList.add('bg-gray-50');
+                initializeAppUI();
             }
 
             function showLoginForm() {
-                authTitle.textContent = 'Login';
-                loginForm.classList.remove('hidden');
-                signupForm.classList.add('hidden');
-                switchToSignup.classList.remove('hidden');
-                switchToLogin.classList.add('hidden');
-                loginError.classList.add('hidden');
-                signupError.classList.add('hidden');
+                 console.log("Showing Login Form"); // DEBUG
+                if(authTitle) authTitle.textContent = 'Login';
+                if(loginForm) loginForm.classList.remove('hidden');
+                if(signupForm) signupForm.classList.add('hidden');
+                if(switchToSignup) switchToSignup.classList.remove('hidden');
+                if(switchToLogin) switchToLogin.classList.add('hidden');
+                if(loginError) loginError.classList.add('hidden');
+                if(signupError) signupError.classList.add('hidden');
             }
 
             function showSignupForm() {
-                authTitle.textContent = 'Sign Up';
-                loginForm.classList.add('hidden');
-                signupForm.classList.remove('hidden');
-                switchToSignup.classList.add('hidden');
-                switchToLogin.classList.remove('hidden');
-                loginError.classList.add('hidden');
-                 signupError.classList.add('hidden');
+                 console.log("Showing Signup Form"); // DEBUG
+                 if(authTitle) authTitle.textContent = 'Sign Up';
+                 if(loginForm) loginForm.classList.add('hidden');
+                 if(signupForm) signupForm.classList.remove('hidden');
+                 if(switchToSignup) switchToSignup.classList.add('hidden');
+                 if(switchToLogin) switchToLogin.classList.remove('hidden');
+                 if(loginError) loginError.classList.add('hidden');
+                 if(signupError) signupError.classList.add('hidden');
             }
 
             function showError(element, message) {
-                element.textContent = message;
-                element.classList.remove('hidden');
-            }
-
-            // --- Exam Functionality (Adapted for Current User) ---
-
-            // Helper to escape HTML
-            function escapeHtml(unsafe) {
-                if (!unsafe) return '';
-                return unsafe
-                     .replace(/&/g, "&")
-                     .replace(/</g, "<")
-                     .replace(/>/g, ">")
-                     .replace(/"/g, """)
-                     .replace(/'/g, "'");
-            }
-
-            // Initialize or refresh the entire app UI for the current user
-            function initializeAppUI() {
-                resetEditMode(); // Ensure form is in 'add' mode
-                updateExamSelector();
-                updateExamsTable();
-
-                // Attempt to restore last selected exam or select the first
-                const lastSelectedId = sessionStorage.getItem(`lastSelectedExamId_${currentUser}`);
-                const exams = getCurrentUserExams();
-                const examToSelect = exams.find(e => e.id === lastSelectedId) || exams[0];
-
-                if (examToSelect) {
-                    examSelector.value = examToSelect.id;
-                    renderExamDetails(examToSelect.id);
-                } else {
-                    clearExamDetails(); // Show 'no exam selected' state
-                }
-            }
-
-             function clearExamDetails() {
-                 noExamSelected.classList.remove('hidden');
-                 examDetails.classList.add('hidden');
-                 examSelector.value = ""; // Reset dropdown
-             }
-
-
-            // Form submission for adding/editing exams
-            examForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                 if (!currentUser) return; // Should not happen if UI is correct
-
-                let exams = getCurrentUserExams(); // Get current user's exams
-
-                // Collect form data (same as before)
-                const examName = document.getElementById('examName').value.trim();
-                const examDate = document.getElementById('examDate').value;
-                const examEctsInput = document.getElementById('examEcts').value;
-                const examGradeInput = document.getElementById('examGrade').value.trim();
-                const totalTopics = parseInt(document.getElementById('totalTopics').value);
-                const completedTopics = parseInt(document.getElementById('completedTopics').value) || 0;
-                const priority = document.getElementById('priority').value;
-
-                // Validation (same as before)
-                 if (completedTopics > totalTopics) {
-                     alert('Completed topics cannot exceed total topics');
-                     return;
-                 }
-                 const ectsValue = examEctsInput ? parseFloat(examEctsInput) : null;
-                 if (examEctsInput && isNaN(ectsValue)) {
-                     alert('Please enter a valid number for ECTS or leave it empty.');
-                     return;
-                 }
-
-                const examData = {
-                    name: examName, date: examDate, ects: ectsValue, grade: examGradeInput,
-                    totalTopics: totalTopics, completedTopics: completedTopics, priority: priority
-                };
-
-                let message = '';
-                let examIdToSelect = null;
-
-                if (window.isEditing) {
-                    const index = exams.findIndex(e => e.id === window.currentEditId);
-                    if (index !== -1) {
-                        exams[index] = { ...exams[index], ...examData };
-                        message = 'Exam updated successfully!';
-                        examIdToSelect = window.currentEditId;
-                        resetEditMode(); // Reset form state
-                    } else {
-                        message = 'Error: Could not find exam to update.';
-                        resetEditMode();
-                    }
-                } else {
-                    const newExam = { id: Date.now().toString(), ...examData, createdAt: new Date().toISOString() };
-                    exams.push(newExam);
-                    message = 'Exam added successfully!';
-                    examIdToSelect = newExam.id; // Select the newly added exam
-                }
-
-                saveCurrentUserExams(exams); // Save updated exams for the user
-                alert(message);
-
-                 // Update UI
-                updateExamSelector();
-                updateExamsTable();
-                 if (examIdToSelect) {
-                    examSelector.value = examIdToSelect; // Set dropdown
-                     renderExamDetails(examIdToSelect); // Show details
-                     sessionStorage.setItem(`lastSelectedExamId_${currentUser}`, examIdToSelect); // Remember selection for this user
+                 console.log("Showing error:", message); // DEBUG
+                 if (element) {
+                    element.textContent = message;
+                    element.classList.remove('hidden');
                  } else {
-                     clearExamDetails();
+                     console.error("Cannot show error, element not found.");
                  }
-
-                examForm.reset(); // Reset form fields
-            });
-
-            // Cancel edit
-            cancelEdit.addEventListener('click', resetEditMode);
-
-            function resetEditMode() {
-                window.isEditing = false;
-                window.currentEditId = null;
-                formTitle.textContent = 'Add New Exam';
-                submitButton.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Add Exam';
-                cancelEdit.classList.add('hidden');
-                examForm.reset(); // Clear form fields
-                examIdInput.value = ''; // Clear hidden ID field
             }
 
-            // Exam selector change
-            examSelector.addEventListener('change', function() {
-                const selectedExamId = this.value;
-                 if (!currentUser) return; // Safety check
+             // --- Exam Functionality (Adapted for Current User) ---
 
-                if (selectedExamId) {
-                    renderExamDetails(selectedExamId);
-                     sessionStorage.setItem(`lastSelectedExamId_${currentUser}`, selectedExamId); // Remember selection
-                } else {
-                    clearExamDetails();
-                     sessionStorage.removeItem(`lastSelectedExamId_${currentUser}`); // Clear remembered selection
-                }
-            });
-
-            // Update exam selector dropdown
-            function updateExamSelector() {
-                 if (!currentUser) return;
-                const currentSelectedValue = examSelector.value;
-                examSelector.innerHTML = '<option value="">Select an exam</option>';
-                let exams = getCurrentUserExams();
-
-                exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                exams.forEach(exam => {
-                    const option = document.createElement('option');
-                    option.value = exam.id;
-                    option.textContent = `${escapeHtml(exam.name)} (${formatDate(exam.date)})`;
-                    examSelector.appendChild(option);
-                });
-
-                 // Restore selection if the exam still exists for the current user
-                if (exams.some(e => e.id === currentSelectedValue)) {
-                    examSelector.value = currentSelectedValue;
-                } else if (exams.length > 0) {
-                    // If previous selection gone, maybe select first? Or leave as "Select..."
-                    // examSelector.value = exams[0].id; // Optional: select first if previous gone
-                }
-            }
-
-            // Update exams table
-            function updateExamsTable() {
-                 if (!currentUser) return;
-                examsTableBody.innerHTML = '';
-                let exams = getCurrentUserExams();
-
-                if (exams.length === 0) {
-                    examsTableBody.innerHTML = `<tr><td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">No exams added yet</td></tr>`;
-                    return;
-                }
-
-                exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                 // Table row generation logic (mostly unchanged, ensure using escapeHtml)
-                exams.forEach(exam => {
-                    const daysLeft = calculateDaysLeft(exam.date);
-                    const progress = exam.totalTopics > 0 ? Math.round((exam.completedTopics / exam.totalTopics) * 100) : 0;
-                    const displayEcts = exam.ects !== null && exam.ects !== undefined ? exam.ects : '<span class="text-muted">N/A</span>';
-                    const displayGrade = exam.grade ? escapeHtml(exam.grade) : '<span class="text-muted">N/A</span>';
-
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-gray-50';
-                    // Using onclick remains simplest for this structure, ensure functions are global
-                    row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"><i class="fas fa-book text-indigo-600"></i></div>
-                                <div class="ml-4"><div class="text-sm font-medium text-gray-900">${escapeHtml(exam.name)}</div></div>
-                            </div>
-                        </td>
+             function escapeHtml(unsafe) { /* ... same ... */ return unsafe ? unsafe.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">").replace(/"/g, """).replace(/'/g, "'") : ''; }
+             function initializeAppUI() { /* ... same ... */ console.log("Initializing App UI"); resetEditMode(); updateExamSelector(); updateExamsTable(); const lastSelectedId = sessionStorage.getItem(`lastSelectedExamId_${currentUser}`); const exams = getCurrentUserExams(); const examToSelect = exams.find(e=>e.id===lastSelectedId) || exams[0]; if(examToSelect){ examSelector.value = examToSelect.id; renderExamDetails(examToSelect.id); } else { clearExamDetails(); } }
+             function clearExamDetails() { /* ... same ... */ console.log("Clearing exam details"); noExamSelected.classList.remove('hidden'); examDetails.classList.add('hidden'); examSelector.value = ""; }
+             function resetEditMode() { /* ... same ... */ console.log("Resetting edit mode"); window.isEditing = false; window.currentEditId = null; formTitle.textContent = 'Add New Exam'; submitButton.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Add Exam'; cancelEdit.classList.add('hidden'); examForm.reset(); examIdInput.value = ''; }
+             function updateExamSelector() { /* ... same, adapted for user ... */ if(!currentUser) return; console.log("Updating exam selector"); const currentSelectedValue = examSelector.value; examSelector.innerHTML = '<option value="">Select an exam</option>'; let exams = getCurrentUserExams(); exams.sort((a, b) => new Date(a.date) - new Date(b.date)); exams.forEach(exam => { const option = document.createElement('option'); option.value = exam.id; option.textContent = `${escapeHtml(exam.name)} (${formatDate(exam.date)})`; examSelector.appendChild(option); }); if(exams.some(e => e.id === currentSelectedValue)) { examSelector.value = currentSelectedValue; } }
+             function updateExamsTable() { /* ... same, adapted for user ... */ if(!currentUser) return; console.log("Updating exams table"); examsTableBody.innerHTML = ''; let exams = getCurrentUserExams(); if(exams.length === 0) { examsTableBody.innerHTML = `<tr><td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">No exams added yet</td></tr>`; return; } exams.sort((a, b) => new Date(a.date) - new Date(b.date)); exams.forEach(exam => { const daysLeft = calculateDaysLeft(exam.date); const progress = exam.totalTopics > 0 ? Math.round((exam.completedTopics / exam.totalTopics) * 100) : 0; const displayEcts = exam.ects !== null && exam.ects !== undefined ? exam.ects : '<span class="text-muted">N/A</span>'; const displayGrade = exam.grade ? escapeHtml(exam.grade) : '<span class="text-muted">N/A</span>'; const row = document.createElement('tr'); row.className = 'hover:bg-gray-50'; row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap"><div class="flex items-center"><div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"><i class="fas fa-book text-indigo-600"></i></div><div class="ml-4"><div class="text-sm font-medium text-gray-900">${escapeHtml(exam.name)}</div></div></div></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(exam.date)}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">${displayEcts}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">${displayGrade}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${daysLeft < 0 ? 'bg-gray-100 text-gray-800' : daysLeft === 0 ? 'bg-yellow-100 text-yellow-800' : daysLeft <= 7 ? 'bg-red-100 text-red-800' : daysLeft <= 14 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}">
-                                ${daysLeft < 0 ? 'Passed' : daysLeft === 0 ? 'Today!' : daysLeft + ' days'}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="w-20 bg-gray-200 rounded-full h-2 mr-2"><div class="bg-indigo-600 h-2 rounded-full" style="width: ${progress}%"></div></div>
-                                <span class="text-sm text-gray-500">${progress}%</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${exam.priority === 'high' ? 'bg-red-100 text-red-800' : exam.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'} capitalize">
-                                ${exam.priority}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <button onclick="editExam('${exam.id}')" class="text-indigo-600 hover:text-indigo-900 mr-3" title="Edit"><i class="fas fa-edit"></i></button>
-                            <button onclick="deleteExam('${exam.id}')" class="text-red-600 hover:text-red-900" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                    `;
-                    examsTableBody.appendChild(row);
-                });
-            }
+                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${daysLeft < 0 ? 'bg-gray-100 text-gray-800' : daysLeft === 0 ? 'bg-yellow-100 text-yellow-800' : daysLeft <= 7 ? 'bg-red-100 text-red-800' : daysLeft <= 14 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}">${daysLeft < 0 ? 'Passed' : daysLeft === 0 ? 'Today!' : daysLeft + ' days'}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><div class="flex items-center"><div class="w-20 bg-gray-200 rounded-full h-2 mr-2"><div class="bg-indigo-600 h-2 rounded-full" style="width: ${progress}%"></div></div><span class="text-sm text-gray-500">${progress}%</span></div></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${exam.priority === 'high' ? 'bg-red-100 text-red-800' : exam.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'} capitalize">${exam.priority}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"><button onclick="editExam('${exam.id}')" class="text-indigo-600 hover:text-indigo-900 mr-3" title="Edit"><i class="fas fa-edit"></i></button><button onclick="deleteExam('${exam.id}')" class="text-red-600 hover:text-red-900" title="Delete"><i class="fas fa-trash-alt"></i></button></td>
+                    `; examsTableBody.appendChild(row); }); }
+             function renderExamDetails(examId) { /* ... same, adapted for user ... */ if(!currentUser) return; console.log(`Rendering details for exam: ${examId}`); let exams = getCurrentUserExams(); const exam = exams.find(e => e.id === examId); if(!exam) { clearExamDetails(); return; } noExamSelected.classList.add('hidden'); examDetails.classList.remove('hidden'); const daysLeft = calculateDaysLeft(exam.date); const progress = exam.totalTopics > 0 ? Math.round((exam.completedTopics / exam.totalTopics) * 100) : 0; const displayEcts = exam.ects !== null && exam.ects !== undefined ? exam.ects : 'N/A'; const displayGrade = exam.grade ? escapeHtml(exam.grade) : 'N/A'; document.getElementById('daysLeft').textContent = daysLeft < 0 ? '-' : daysLeft; document.getElementById('progressPercent').textContent = `${progress}%`; document.getElementById('priorityLevel').textContent = exam.priority; document.getElementById('examNameDisplay').textContent = escapeHtml(exam.name); document.getElementById('examDateDisplay').textContent = `Date: ${formatDate(exam.date)}`; document.getElementById('examEctsDisplay').textContent = `ECTS: ${displayEcts}`; document.getElementById('examGradeDisplay').textContent = `Grade: ${displayGrade}`; document.getElementById('completedTopicsDisplay').textContent = `${exam.completedTopics} completed`; document.getElementById('totalTopicsDisplay').textContent = `of ${exam.totalTopics} total`; document.getElementById('topicsProgressBar').style.width = `${progress}%`; const circle = document.querySelector('.progress-ring__circle'); const radius = circle.r.baseVal.value; const circumference = 2 * Math.PI * radius; const offset = circumference - (progress / 100) * circumference; circle.style.strokeDasharray = `${circumference} ${circumference}`; circle.style.strokeDashoffset = offset; document.getElementById('ringProgressPercent').textContent = `${progress}%`; const recommendation = getStudyRecommendation(daysLeft, progress, exam.priority, exam.totalTopics, exam.completedTopics); document.getElementById('studyRecommendation').textContent = recommendation; }
+             function calculateDaysLeft(examDate) { /* ... same ... */ const today = new Date(); today.setHours(0, 0, 0, 0); const examDay = new Date(examDate); examDay.setHours(0, 0, 0, 0); const diffTime = examDay - today; return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); }
+             function formatDate(dateString) { /* ... same ... */ if (!dateString || isNaN(new Date(dateString).getTime())) return 'Invalid Date'; const options = { year: 'numeric', month: 'short', day: 'numeric' }; return new Date(dateString).toLocaleDateString(undefined, options); }
+             function getStudyRecommendation(daysLeft, progress, priority, totalTopics, completedTopics) { /* ... same ... */ const remainingTopics = totalTopics - completedTopics; if(daysLeft < 0) return "Exam date has passed."; if(daysLeft === 0) return "Your exam is TODAY! Review key notes and stay calm. Good luck!"; if(remainingTopics <= 0) return "All topics completed! Focus on reviewing past mistakes and practice tests."; const topicsPerDay = Math.ceil(remainingTopics / daysLeft); let recommendation = `Aim to cover ${topicsPerDay} topic${topicsPerDay > 1 ? 's' : ''} per day. `; if(priority === 'high') recommendation += "This is a high priority exam! "; if(daysLeft <= 3) recommendation += `CRUNCH TIME! Focus intensely on key concepts and weak areas.`; else if (daysLeft <= 7) recommendation += `Exam is less than a week away! Finalize your study plan and do timed practice.`; else if (progress < 30 && daysLeft > 7) recommendation += `You're a bit behind. Try to increase your daily study time.`; else if (progress >= 70) recommendation += `Great progress! Keep reviewing and use practice questions to solidify knowledge.`; else recommendation += `Maintain a steady pace. Schedule regular review sessions.`; return recommendation; }
 
-            // Render exam details (mostly unchanged, ensure using escapeHtml)
-            function renderExamDetails(examId) {
-                 if (!currentUser) return;
-                let exams = getCurrentUserExams();
-                const exam = exams.find(e => e.id === examId);
-                if (!exam) {
-                     clearExamDetails();
-                    return;
-                }
 
-                noExamSelected.classList.add('hidden');
-                examDetails.classList.remove('hidden');
+             // --- Event Listener Setup ---
+             // Moved *inside* DOMContentLoaded, added checks and logging
 
-                const daysLeft = calculateDaysLeft(exam.date);
-                const progress = exam.totalTopics > 0 ? Math.round((exam.completedTopics / exam.totalTopics) * 100) : 0;
-                const displayEcts = exam.ects !== null && exam.ects !== undefined ? exam.ects : 'N/A';
-                const displayGrade = exam.grade ? escapeHtml(exam.grade) : 'N/A';
+             console.log("Setting up event listeners..."); // DEBUG
 
-                document.getElementById('daysLeft').textContent = daysLeft < 0 ? '-' : daysLeft;
-                document.getElementById('progressPercent').textContent = `${progress}%`;
-                document.getElementById('priorityLevel').textContent = exam.priority;
-                document.getElementById('examNameDisplay').textContent = escapeHtml(exam.name);
-                document.getElementById('examDateDisplay').textContent = `Date: ${formatDate(exam.date)}`;
-                document.getElementById('examEctsDisplay').textContent = `ECTS: ${displayEcts}`;
-                document.getElementById('examGradeDisplay').textContent = `Grade: ${displayGrade}`;
-                document.getElementById('completedTopicsDisplay').textContent = `${exam.completedTopics} completed`;
-                document.getElementById('totalTopicsDisplay').textContent = `of ${exam.totalTopics} total`;
-                document.getElementById('topicsProgressBar').style.width = `${progress}%`;
-
-                const circle = document.querySelector('.progress-ring__circle');
-                const radius = circle.r.baseVal.value;
-                const circumference = 2 * Math.PI * radius;
-                const offset = circumference - (progress / 100) * circumference;
-                circle.style.strokeDasharray = `${circumference} ${circumference}`;
-                circle.style.strokeDashoffset = offset;
-                document.getElementById('ringProgressPercent').textContent = `${progress}%`;
-
-                const recommendation = getStudyRecommendation(daysLeft, progress, exam.priority, exam.totalTopics, exam.completedTopics);
-                document.getElementById('studyRecommendation').textContent = recommendation;
-            }
-
-            // --- Helper Functions (Unchanged) ---
-            function calculateDaysLeft(examDate) { /* ... same as before ... */
-                const today = new Date(); today.setHours(0, 0, 0, 0);
-                const examDay = new Date(examDate); examDay.setHours(0, 0, 0, 0);
-                const diffTime = examDay - today;
-                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+             // Login Form Submission
+             if (loginForm) {
+                 loginForm.addEventListener('submit', handleLogin);
+                 console.log("Login form listener attached."); // DEBUG
+             } else {
+                 console.error("Login form not found, cannot attach listener.");
              }
-            function formatDate(dateString) { /* ... same as before ... */
-                 if (!dateString || isNaN(new Date(dateString).getTime())) return 'Invalid Date';
-                 const options = { year: 'numeric', month: 'short', day: 'numeric' };
-                 return new Date(dateString).toLocaleDateString(undefined, options);
-            }
-            function getStudyRecommendation(daysLeft, progress, priority, totalTopics, completedTopics) { /* ... same as before ... */
-                const remainingTopics = totalTopics - completedTopics;
-                 if (daysLeft < 0) return "Exam date has passed.";
-                 if (daysLeft === 0) return "Your exam is TODAY! Review key notes and stay calm. Good luck!";
-                 if (remainingTopics <= 0) return "All topics completed! Focus on reviewing past mistakes and practice tests.";
-                 const topicsPerDay = Math.ceil(remainingTopics / daysLeft);
-                 let recommendation = `Aim to cover ${topicsPerDay} topic${topicsPerDay > 1 ? 's' : ''} per day. `;
-                 if (priority === 'high') recommendation += "This is a high priority exam! ";
-                 if (daysLeft <= 3) recommendation += `CRUNCH TIME! Focus intensely on key concepts and weak areas.`;
-                 else if (daysLeft <= 7) recommendation += `Exam is less than a week away! Finalize your study plan and do timed practice.`;
-                 else if (progress < 30 && daysLeft > 7) recommendation += `You're a bit behind. Try to increase your daily study time.`;
-                 else if (progress >= 70) recommendation += `Great progress! Keep reviewing and use practice questions to solidify knowledge.`;
-                 else recommendation += `Maintain a steady pace. Schedule regular review sessions.`;
-                 return recommendation;
-            }
 
-            // --- Event Listeners ---
-            loginForm.addEventListener('submit', handleLogin);
-            signupForm.addEventListener('submit', handleSignup);
-            logoutButton.addEventListener('click', handleLogout);
-            switchToSignup.addEventListener('click', showSignupForm);
-            switchToLogin.addEventListener('click', showLoginForm);
+             // Signup Form Submission
+             if (signupForm) {
+                 signupForm.addEventListener('submit', handleSignup);
+                 console.log("Signup form listener attached."); // DEBUG
+             } else {
+                 console.error("Signup form not found, cannot attach listener.");
+             }
 
-            // --- Initialization ---
+             // Logout Button Click
+             if (logoutButton) {
+                 logoutButton.addEventListener('click', handleLogout);
+                 console.log("Logout button listener attached."); // DEBUG
+             } else {
+                 console.error("Logout button not found, cannot attach listener.");
+             }
+
+             // Switch to Signup View Click
+             if (switchToSignup) {
+                 switchToSignup.addEventListener('click', showSignupForm);
+                 console.log("Switch to Signup listener attached."); // DEBUG
+             } else {
+                 console.error("Switch to Signup button not found, cannot attach listener.");
+             }
+
+             // Switch to Login View Click
+             if (switchToLogin) {
+                 switchToLogin.addEventListener('click', showLoginForm);
+                 console.log("Switch to Login listener attached."); // DEBUG
+             } else {
+                 console.error("Switch to Login button not found, cannot attach listener.");
+             }
+
+             // Exam Form Submission (Add/Edit)
+             if (examForm) {
+                 examForm.addEventListener('submit', function(e) {
+                     e.preventDefault(); // Prevent default here as well
+                      console.log("Exam form submitted (Add/Edit)"); // DEBUG
+                     if (!currentUser) {
+                          console.error("Cannot submit exam form: No user logged in.");
+                         return;
+                      }
+
+                     let exams = getCurrentUserExams();
+                     const examName = document.getElementById('examName').value.trim();
+                     const examDate = document.getElementById('examDate').value;
+                     const examEctsInput = document.getElementById('examEcts').value;
+                     const examGradeInput = document.getElementById('examGrade').value.trim();
+                     const totalTopics = parseInt(document.getElementById('totalTopics').value);
+                     const completedTopics = parseInt(document.getElementById('completedTopics').value) || 0;
+                     const priority = document.getElementById('priority').value;
+
+                     if (isNaN(totalTopics) || totalTopics < 1) { alert("Total topics must be a number greater than 0."); return; }
+                     if (isNaN(completedTopics) || completedTopics < 0) { alert("Completed topics must be a non-negative number."); return; }
+                     if (completedTopics > totalTopics) { alert('Completed topics cannot exceed total topics'); return; }
+                     const ectsValue = examEctsInput ? parseFloat(examEctsInput) : null;
+                     if (examEctsInput && isNaN(ectsValue)) { alert('Please enter a valid number for ECTS or leave it empty.'); return; }
+
+                     const examData = { name: examName, date: examDate, ects: ectsValue, grade: examGradeInput, totalTopics: totalTopics, completedTopics: completedTopics, priority: priority };
+                     let message = ''; let examIdToSelect = null;
+
+                     if (window.isEditing) {
+                         const index = exams.findIndex(ex => ex.id === window.currentEditId);
+                         if (index !== -1) {
+                             exams[index] = { ...exams[index], ...examData };
+                             message = 'Exam updated successfully!'; examIdToSelect = window.currentEditId;
+                             resetEditMode();
+                         } else { message = 'Error: Could not find exam to update.'; resetEditMode(); }
+                     } else {
+                         const newExam = { id: Date.now().toString(), ...examData, createdAt: new Date().toISOString() };
+                         exams.push(newExam);
+                         message = 'Exam added successfully!'; examIdToSelect = newExam.id;
+                     }
+
+                     saveCurrentUserExams(exams);
+                     alert(message);
+                     updateExamSelector(); updateExamsTable();
+                     if (examIdToSelect) { examSelector.value = examIdToSelect; renderExamDetails(examIdToSelect); sessionStorage.setItem(`lastSelectedExamId_${currentUser}`, examIdToSelect); }
+                     else { clearExamDetails(); }
+                     examForm.reset();
+                 });
+                 console.log("Exam form listener attached."); // DEBUG
+             } else {
+                  console.error("Exam form not found, cannot attach listener.");
+             }
+
+             // Cancel Edit Button Click
+             if (cancelEdit) {
+                 cancelEdit.addEventListener('click', resetEditMode);
+                 console.log("Cancel edit listener attached."); // DEBUG
+             } else {
+                 console.error("Cancel edit button not found, cannot attach listener.");
+             }
+
+              // Exam Selector Change
+             if (examSelector) {
+                 examSelector.addEventListener('change', function() {
+                     console.log("Exam selector changed"); // DEBUG
+                     const selectedExamId = this.value;
+                     if (!currentUser) return;
+                     if (selectedExamId) { renderExamDetails(selectedExamId); sessionStorage.setItem(`lastSelectedExamId_${currentUser}`, selectedExamId); }
+                     else { clearExamDetails(); sessionStorage.removeItem(`lastSelectedExamId_${currentUser}`); }
+                 });
+                 console.log("Exam selector listener attached."); // DEBUG
+             } else {
+                 console.error("Exam selector not found, cannot attach listener.");
+             }
+
+             // --- Custom Event Listeners for Delete UX ---
+             document.addEventListener('updateSelectorAndTable', () => {
+                 console.log("Custom event 'updateSelectorAndTable' received."); // DEBUG
+                 if (window.currentUser) {
+                     updateExamSelector();
+                     updateExamsTable();
+                 }
+             });
+             document.addEventListener('clearDetails', () => {
+                 console.log("Custom event 'clearDetails' received."); // DEBUG
+                 clearExamDetails();
+             });
+             console.log("Custom event listeners attached."); // DEBUG
+
+
+            // --- Initial Page Load Logic ---
+             console.log("Running initial page load check..."); // DEBUG
             if (checkLoginState()) {
-                showApp(); // If already logged in (session active), show app
+                showApp();
             } else {
-                showAuth(); // Otherwise, show login/signup
+                showAuth();
             }
-        });
+            console.log("Initial setup complete."); // DEBUG
+
+        }); // End of DOMContentLoaded
 
         // --- Global functions for onclick handlers ---
-        // IMPORTANT: These now need to work with the *current user's* data
+        // Diese müssen außerhalb von DOMContentLoaded definiert sein, damit sie global sind
         function editExam(examId) {
-            if (!window.currentUser) return; // Check if user is logged in
-             let exams = JSON.parse(localStorage.getItem('examTrackerAppData')).users[window.currentUser]?.exams || []; // Get fresh data
+            console.log(`Global editExam called for ID: ${examId}`); // DEBUG
+            if (!window.currentUser) { console.error("Edit cancelled: No user logged in."); return; }
+            // Laden Sie die Daten frisch aus dem Speicher, um sicherzustellen, dass sie aktuell sind
+             let appData = JSON.parse(localStorage.getItem('examTrackerAppData')) || { users: {} };
+             let exams = appData.users[window.currentUser]?.exams || [];
             const exam = exams.find(e => e.id === examId);
-            if (!exam) return;
+            if (!exam) { console.error(`Edit cancelled: Exam with ID ${examId} not found for user ${window.currentUser}.`); return; }
 
-            // Populate form (same as before)
-             document.getElementById('examId').value = exam.id;
-             document.getElementById('examName').value = exam.name;
-             document.getElementById('examDate').value = exam.date;
-             document.getElementById('examEcts').value = exam.ects !== null ? exam.ects : '';
-             document.getElementById('examGrade').value = exam.grade || '';
-             document.getElementById('totalTopics').value = exam.totalTopics;
-             document.getElementById('completedTopics').value = exam.completedTopics;
-             document.getElementById('priority').value = exam.priority;
+            document.getElementById('examId').value = exam.id;
+            document.getElementById('examName').value = exam.name;
+            document.getElementById('examDate').value = exam.date;
+            document.getElementById('examEcts').value = exam.ects !== null ? exam.ects : '';
+            document.getElementById('examGrade').value = exam.grade || '';
+            document.getElementById('totalTopics').value = exam.totalTopics;
+            document.getElementById('completedTopics').value = exam.completedTopics;
+            document.getElementById('priority').value = exam.priority;
 
-            // Set editing state (same as before)
-             document.getElementById('formTitle').textContent = 'Edit Exam';
-             document.getElementById('submitButton').innerHTML = '<i class="fas fa-save mr-2"></i> Save Changes';
-             document.getElementById('cancelEdit').classList.remove('hidden');
-             window.isEditing = true;
-             window.currentEditId = examId;
-             document.getElementById('examForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('formTitle').textContent = 'Edit Exam';
+            document.getElementById('submitButton').innerHTML = '<i class="fas fa-save mr-2"></i> Save Changes';
+            document.getElementById('cancelEdit').classList.remove('hidden');
+            window.isEditing = true; // Stellen Sie sicher, dass der Bearbeitungsstatus global gesetzt wird
+            window.currentEditId = examId;
+            document.getElementById('examForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function deleteExam(examId, confirmDelete = true) {
-            if (!window.currentUser) return; // Check if user is logged in
+             console.log(`Global deleteExam called for ID: ${examId}`); // DEBUG
+            if (!window.currentUser) { console.error("Delete cancelled: No user logged in."); return; }
+             // Laden Sie die Daten frisch
              let appData = JSON.parse(localStorage.getItem('examTrackerAppData')) || { users: {} };
-             if (!appData.users[window.currentUser]) return; // Check user data exists
+             if (!appData.users[window.currentUser]) { console.error(`Delete cancelled: User ${window.currentUser} not found in appData.`); return; }
 
             let exams = appData.users[window.currentUser].exams || [];
             const examToDelete = exams.find(e => e.id === examId);
-            if (!examToDelete) return;
+            if (!examToDelete) { console.error(`Delete cancelled: Exam with ID ${examId} not found for user ${window.currentUser}.`); return; }
 
-            if (confirmDelete && !confirm(`Are you sure you want to delete the exam "${examToDelete.name}"?`)) {
+            // Verwenden Sie escapeHtml hier, falls der Name HTML enthält
+             const safeExamName = examToDelete.name.replace(/</g, "<").replace(/>/g, ">"); // Simple escape for confirm dialog
+            if (confirmDelete && !confirm(`Are you sure you want to delete the exam "${safeExamName}"?`)) {
+                console.log("Delete cancelled by user."); // DEBUG
                 return;
             }
 
-            // Filter out the exam
             appData.users[window.currentUser].exams = exams.filter(e => e.id !== examId);
+            localStorage.setItem('examTrackerAppData', JSON.stringify(appData)); // Speichern
+             console.log("Exam deleted from data and saved."); // DEBUG
 
-            // Save the updated appData
-            localStorage.setItem('examTrackerAppData', JSON.stringify(appData));
+            const currentSelectedId = document.getElementById('examSelector')?.value; // Sicherer Zugriff
+            const wasSelectedDeleted = (currentSelectedId === examId);
 
-            // Clear last selected if it was the deleted one for this user
-            if (sessionStorage.getItem(`lastSelectedExamId_${window.currentUser}`) === examId) {
+            // Trigger UI updates using custom events (listeners are inside DOMContentLoaded)
+            document.dispatchEvent(new CustomEvent('updateSelectorAndTable'));
+
+            if (wasSelectedDeleted) {
+                 console.log("Deleted exam was selected, clearing details."); // DEBUG
+                document.dispatchEvent(new CustomEvent('clearDetails'));
                 sessionStorage.removeItem(`lastSelectedExamId_${window.currentUser}`);
             }
-
-            // Refresh the UI *for the current user*
-            // Re-triggering parts of the DOMContentLoaded logic is complex.
-            // The simplest way is often to re-run the UI initialization logic.
-             // We can simulate this by calling the main UI setup function again.
-             // Note: This requires the DOMContentLoaded function to be structured well.
-             // A full reload (document.location.reload()) is simpler but less smooth.
-             // Let's try calling the initialization directly:
             alert('Exam deleted.');
-             const initEvent = new CustomEvent('initializeAppUI');
-             document.dispatchEvent(initEvent);
-             // Need listener for this custom event within DOMContentLoaded, or better:
-             // Directly call the functions:
-             window.initializeAppUIGlobally(); // Need to expose initializeAppUI globally
         }
 
-        // Expose functions needed by onclick handlers and custom event trigger
+        // Stellen Sie sicher, dass die globalen Funktionen zugänglich sind
          window.editExam = editExam;
          window.deleteExam = deleteExam;
-         // Expose the initializer function to be called after delete
-         window.initializeAppUIGlobally = () => {
-             const event = new Event('DOMContentLoaded'); // Re-run the main logic
-             document.dispatchEvent(event);
-         };
-         // A cleaner way for deleteExam would be to avoid reload/re-init and just call
-         // updateExamSelector(), updateExamsTable(), and decide which exam detail to show/clear.
-         // Let's refine deleteExam slightly for better UX without full re-init:
-         function deleteExam(examId, confirmDelete = true) {
-             if (!window.currentUser) return;
-             let appData = JSON.parse(localStorage.getItem('examTrackerAppData')) || { users: {} };
-             if (!appData.users[window.currentUser]) return;
 
-             let exams = appData.users[window.currentUser].exams || [];
-             const examToDelete = exams.find(e => e.id === examId);
-             if (!examToDelete) return;
-
-             if (confirmDelete && !confirm(`Are you sure you want to delete the exam "${escapeHtml(examToDelete.name)}"?`)) {
-                 return;
-             }
-
-             appData.users[window.currentUser].exams = exams.filter(e => e.id !== examId);
-             localStorage.setItem('examTrackerAppData', JSON.stringify(appData)); // Save updated data
-
-             const currentSelectedId = document.getElementById('examSelector').value;
-             const wasSelectedDeleted = (currentSelectedId === examId);
-
-             // Update the UI directly
-             document.dispatchEvent(new CustomEvent('updateSelectorAndTable')); // Trigger updates via custom event
-
-             if (wasSelectedDeleted) {
-                 // Clear details view and remembered selection
-                 document.dispatchEvent(new CustomEvent('clearDetails'));
-                 sessionStorage.removeItem(`lastSelectedExamId_${window.currentUser}`);
-             }
-             alert('Exam deleted.');
-         }
-         window.deleteExam = deleteExam; // Make sure latest version is global
-
-         // Add listeners for custom events within DOMContentLoaded
-         document.addEventListener('updateSelectorAndTable', () => {
-             if (window.currentUser) { // Ensure user context
-                 updateExamSelector(); // Assumes updateExamSelector is defined in the outer scope
-                 updateExamsTable();   // Assumes updateExamsTable is defined in the outer scope
-             }
-         });
-         document.addEventListener('clearDetails', () => {
-             clearExamDetails(); // Assumes clearExamDetails is defined in the outer scope
-         });
 
     </script>
 
